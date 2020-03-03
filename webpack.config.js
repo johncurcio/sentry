@@ -34,6 +34,8 @@ const NO_DEV_SERVER = env.NO_DEV_SERVER;
 const FORCE_WEBPACK_DEV_SERVER = env.FORCE_WEBPACK_DEV_SERVER;
 const IS_CI = !!env.CI || !!env.TRAVIS;
 
+const IS_DEV_ENV = !IS_PRODUCTION || !IS_CI || !!!env.NO_TS_FORK;
+
 // Deploy previews are built using netlify. We can check if we're in netlifys
 // build process by checking the existence of the PULL_REQUEST env var.
 //
@@ -233,7 +235,7 @@ let appConfig = {
         exclude: /(vendor|node_modules|dist)/,
         // Make sure we typecheck in CI, but not for local dev since that is run with
         // the fork-ts plugin
-        use: !IS_CI ? babelLoaderConfig : [babelLoaderConfig, tsLoaderConfig],
+        use: IS_DEV_ENV ? [babelLoaderConfig, tsLoaderConfig] : babelLoaderConfig,
       },
       {
         test: /\.po$/,
@@ -320,7 +322,7 @@ let appConfig = {
 
     new SentryInstrumentation(),
 
-    ...(!IS_CI
+    ...(IS_DEV_ENV
       ? [
           new ForkTsCheckerWebpackPlugin({
             eslint: true,
