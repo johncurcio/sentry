@@ -34,9 +34,8 @@ const NO_DEV_SERVER = env.NO_DEV_SERVER;
 const FORCE_WEBPACK_DEV_SERVER = env.FORCE_WEBPACK_DEV_SERVER;
 const IS_CI = !!env.CI || !!env.TRAVIS;
 
-const NO_TS_FORK = env.NO_TS_FORK === 'true';
 const DEV_MODE = !(IS_PRODUCTION || IS_CI);
-const SHOULD_FORK_TS = DEV_MODE && !NO_TS_FORK;
+const SHOULD_FORK_TS = DEV_MODE && !Boolean(env.NO_TS_FORK);
 
 // Deploy previews are built using netlify. We can check if we're in netlifys
 // build process by checking the existence of the PULL_REQUEST env var.
