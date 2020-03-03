@@ -33,8 +33,9 @@ const USE_HOT_MODULE_RELOAD =
 const NO_DEV_SERVER = env.NO_DEV_SERVER;
 const FORCE_WEBPACK_DEV_SERVER = env.FORCE_WEBPACK_DEV_SERVER;
 const IS_CI = !!env.CI || !!env.TRAVIS;
+const NO_TS_FORK = env.NO_TS_FORK === 'true';
 
-const IS_DEV_ENV = !IS_PRODUCTION || !IS_CI || !!!env.NO_TS_FORK;
+const IS_DEV_ENV = !IS_PRODUCTION || !IS_CI || !NO_TS_FORK;
 
 // Deploy previews are built using netlify. We can check if we're in netlifys
 // build process by checking the existence of the PULL_REQUEST env var.
