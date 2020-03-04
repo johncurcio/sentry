@@ -1,6 +1,7 @@
 import {Redirect, Route, IndexRoute, IndexRedirect} from 'react-router';
 import React from 'react';
 
+import {t} from 'app/locale';
 import {EXPERIMENTAL_SPA} from 'app/constants';
 import App from 'app/views/app';
 import AuthLayout from 'app/views/auth/layout';
@@ -723,6 +724,17 @@ function routes() {
         component={errorHandler(LazyLoad)}
       />
 
+      <Route
+        name={t('Security and Privacy')}
+        path="/security-and-privacy/"
+        componentPromise={() =>
+          import(
+            /* webpackChunkName: "securityAndPrivacy" */ 'app/views/settings/securityAndPrivacy/securityAndPrivacy'
+          )
+        }
+        component={errorHandler(LazyLoad)}
+      />
+
       <Route name="Teams" path="teams/">
         <IndexRoute
           componentPromise={() =>
@@ -835,6 +847,17 @@ function routes() {
           component={errorHandler(LazyLoad)}
         />
       </Route>
+
+      <Route
+        name={t('Security & Privacy')}
+        path="security-and-privacy/"
+        component={errorHandler(LazyLoad)}
+        componentPromise={() =>
+          import(
+            /* webpackChunkName: "SecurityAndPrivacy" */ 'app/views/settings/securityAndPrivacy'
+          )
+        }
+      />
 
       <Route name="Developer Settings" path="developer-settings/">
         <IndexRoute
